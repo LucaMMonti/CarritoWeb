@@ -23,43 +23,59 @@ namespace negocio
 
             try
             {
-                datos.setearConsulta("Select A.Id, Codigo, Nombre, A.Descripcion, Precio, C.Descripcion CATEGORIA , M.Descripcion Marca, A.IdMarca, A.IdCategoria  From ARTICULOS A, CATEGORIAS C, MARCAS M Where C.Id = A.IdCategoria AND M.id = A.idMarca");
+                datos.setearConsulta("Select A.Id, Codigo, Nombre, A.Descripcion, Precio, C.Descripcion CATEGORIA , M.Descripcion Marca, A.IdMarca, A.IdCategoria, I.ImagenUrl From ARTICULOS A, CATEGORIAS C, MARCAS M, IMAGENES I Where C.Id = A.IdCategoria AND M.id = A.idMarca AND I.IdArticulo = A.Id");
                 datos.ejecutarLectura();
 
 
                 while (datos.Lector.Read())
                 {
-                    Articulo aux = new Articulo();
+                    int idArticulo = (int)datos.Lector["Id"];
+                    Articulo aux = lista.FirstOrDefault(a => a.id == idArticulo);
 
-                    aux.id = (int)datos.Lector["Id"];
+                    if (aux == null)
+                    {
+                        aux = new Articulo();
 
-                    if (!(datos.Lector["Codigo"] is DBNull))
-                        aux.Codigo = (string)datos.Lector["Codigo"];
+                        aux.id = idArticulo;
+                        if (!(datos.Lector["Codigo"] is DBNull))
+                            aux.Codigo = (string)datos.Lector["Codigo"];
 
-                    if (!(datos.Lector["Nombre"] is DBNull))
-                        aux.Nombre = (string)datos.Lector["Nombre"];
-                    if (!(datos.Lector["Codigo"] is DBNull))
-                        aux.Descripcion = (string)datos.Lector["Descripcion"];
-                    if (!(datos.Lector["Precio"] is DBNull))
-                        aux.Precio = (decimal)datos.Lector["Precio"];
-                    if (!(datos.Lector["CATEGORIA"] is DBNull))
-                        aux.Categoria = new Categoria();
-                    aux.Categoria.Descripcion = (string)datos.Lector["CATEGORIA"];
-                    if (!(datos.Lector["Marca"] is DBNull))
-                        aux.Marca = new Marca();
-                    aux.Marca.Descripcion = (string)datos.Lector["Marca"];
-                    if (!(datos.Lector["IdMarca"] is DBNull))
-                        aux.Marca.id = (int)datos.Lector["IdMarca"];
-                    if (!(datos.Lector["IdCategoria"] is DBNull))
-                        aux.Categoria.iDCategoria = (int)datos.Lector["IdCategoria"];
-                    //if (!(datos.Lector["Imagen"] is DBNull))
-                    //    aux.Imagen = new Imagen();
-                    //aux.Imagen.ImagenUrl = (string)datos.Lector["Imagen"];
+                        if (!(datos.Lector["Nombre"] is DBNull))
+                            aux.Nombre = (string)datos.Lector["Nombre"];
 
-                    lista.Add(aux);
+                        if (!(datos.Lector["Codigo"] is DBNull))
+                            aux.Descripcion = (string)datos.Lector["Descripcion"];
+
+                        if (!(datos.Lector["Precio"] is DBNull))
+                            aux.Precio = (decimal)datos.Lector["Precio"];
+
+                        if (!(datos.Lector["CATEGORIA"] is DBNull))
+                            aux.Categoria = new Categoria();
+                        aux.Categoria.Descripcion = (string)datos.Lector["CATEGORIA"];
+
+                        if (!(datos.Lector["Marca"] is DBNull))
+                            aux.Marca = new Marca();
+                        aux.Marca.Descripcion = (string)datos.Lector["Marca"];
+
+                        if (!(datos.Lector["IdMarca"] is DBNull))
+                            aux.Marca.id = (int)datos.Lector["IdMarca"];
+
+                        if (!(datos.Lector["IdCategoria"] is DBNull))
+                            aux.Categoria.iDCategoria = (int)datos.Lector["IdCategoria"];
+
+                        lista.Add(aux);
+                    }
+
+                    if (!(datos.Lector["ImagenUrl"] is DBNull))
+                        aux.Imagen = new Imagen();
+                        aux.Imagen.ImagenUrl = (string)datos.Lector["ImagenUrl"];
+
                 }
-                return lista;
+            
+               return lista;
+
             }
+
             catch (Exception ex)
             {
                 throw ex;
@@ -140,7 +156,7 @@ namespace negocio
             AccesoDatos datos = new AccesoDatos();
             try
             {
-                string consulta = "Select Codigo, Nombre, A.Descripcion, Precio, C.Descripcion CATEGORIA, M.Descripcion Marca, ImagenUrl IMAGEN From ARTICULOS A, CATEGORIAS C, MARCAS M, IMAGENES I Where C.Id = A.IdCategoria AND M.id = A.idMarca AND I.IdArticulo = A.Id AND ";
+                string consulta = "Select Codigo, Nombre, A.Descripcion, Precio, C.Descripcion CATEGORIA, M.Descripcion Marca, ImagenUrl IMAGEN From ARTICULOS A, CATEGORIAS C, MARCAS M, IMAGENES I Where C.Id = A.IdCategoria AND M.id = A.idMarca AND I.IdArticulox| = A.Id AND ";
 
                 if (campo == "Codigo")
                 {
