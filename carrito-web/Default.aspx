@@ -20,14 +20,13 @@
             </div>
         </div>
     </div>
-
-   <%if (FiltroAvanzado)
-     { %>
+    
+    <% if (FiltroAvanzado) { %>
     <div class="row">
         <div class="col-3">
             <div class="mb-3">
-                <asp:label text="Campo" runat="server" />
-                <asp:DropDownList runat="server" id="ddlCampo" AutoPostBack="true" CssClass="form-control"  OnSelectedIndexChange ="ddlCampo_SelectedIndexChanged" >
+                <asp:Label Text="Campo" runat="server" />
+                <asp:DropDownList runat="server" ID="ddlCampo" AutoPostBack="true" CssClass="form-control" >
                     <asp:ListItem Text="Código" />
                     <asp:ListItem Text="Nombre" /> 
                     <asp:ListItem Text="Marca" />
@@ -37,13 +36,31 @@
         </div>
         <div class="col-3">
             <div class="mb-3">
-                <asp:label Text="Criterio" runat="server" />
-                <asp:DropDownList runat="server" ID="ddlCriterio" CssClass="form-control"></asp:DropDownList>
-
+                <asp:Label Text="Criterio" runat="server" />
+                <asp:DropDownList runat="server" ID="ddlCriterio" CssClass="form-control">
+                    <asp:ListItem Text="Contiene" />
+                    <asp:ListItem Text="Comienza con" /> 
+                    <asp:ListItem Text="Termina con" />
+                </asp:DropDownList>
             </div>
         </div>
+
+        <div class="mb-3">
+            <asp:Label Text="Filtro" runat="server" />
+            <asp:TextBox ID="txtFiltroAvanzado" runat="server" class="form-control" />
+        </div>
+
+        <div class="row">
+            <div class="col-3">
+                <div class="mb-3">
+                    <asp:button Text="Buscar" runat="server" CssClass="btn btn-primary" ID="btnBuscar" OnClick="btnBuscar_Click"/>
+                </div>
+            </div>
+
+        </div>
+
     </div>
-   <%} %>
+    <% } %>
 
 
 

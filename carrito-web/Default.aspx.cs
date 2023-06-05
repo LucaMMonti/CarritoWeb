@@ -44,24 +44,42 @@ namespace carrito_web
 
         }
 
-        protected void ddlCampo_SelectedIndexChanged(object sender, EventArgs e)
+        protected void btnBuscar_Click(object sender, EventArgs e)
         {
+            try
+            {
+                ArticuloNegocio negocio = new ArticuloNegocio();
+                Repeater1.DataSource = negocio.filtar(
+                    ddlCampo.SelectedItem.ToString(),
+                    ddlCriterio.SelectedItem.ToString(), 
+                    txtFiltroAvanzado.Text);
+                Repeater1.DataBind();
+            }
+            catch (Exception ex) 
+            {
+                Session.Add("error", ex);
+                throw;
+            }
+        }
 
+        /*protected void ddlCampo_SelectedIndexChanged(object sender, EventArgs e)
+        {
+           
             ddlCriterio.Items.Clear();
 
             if (ddlCampo.SelectedItem.ToString() == "Categoria")
             {
-                ddlCriterio.Items.Add("Igual a");
+                ddlCriterio.Items.Add("Igual a");    
                 ddlCriterio.Items.Add("Menor a");
                 ddlCriterio.Items.Add("Mayor a");
             }
             else
-            {
+            { 
                 ddlCriterio.Items.Add("Contiene");
                 ddlCriterio.Items.Add("Comienza con");
                 ddlCriterio.Items.Add("Termina con");
             }
 
-        }
+        } */
     }
 }
